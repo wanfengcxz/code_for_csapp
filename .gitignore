@@ -34,3 +34,5 @@
 
 # mine
 /doc
+/cmake-build-debug
+/.idea
