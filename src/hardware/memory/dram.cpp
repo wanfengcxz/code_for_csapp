@@ -3,9 +3,8 @@
 //
 // Dynamic Random Access Memory
 
-#include "memory.h"
-#include "common.h"
-#include "cpu.h"
+#include "headers/memory.h"
+#include "headers/common.h"
 
 /*
 ------ little end -------

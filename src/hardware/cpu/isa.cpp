@@ -3,9 +3,9 @@
 //
 #include <cstdio>
 
-#include "cpu.h"
-#include "common.h"
-#include "memory.h"
+#include "headers/cpu.h"
+#include "headers/common.h"
+#include "headers/memory.h"
 
 
 /*======================================*/
@@ -114,7 +114,36 @@ static void parse_instruction(const char *str, inst_t *inst, core_t *cr) {
 
 }
 
+
 static void parse_operand(const char *str, od_t *od, core_t *cr) {
+    // str: assembly code string, e.g. mov $rsp,$rbp
+    // od: pointer to the address to store the parsed operand
+    // cr: active core processor
+
+    od->type = EMPTY;
+    od->imm = 0;
+    od->scale = 0;
+    od->reg1 = 0;
+    od->reg2 = 0;
+
+    int str_len = strlen(str);
+    if (str_len == 0){
+        // empty code string
+        return ;
+    }
+
+    if(str[0] == '$'){
+        // imm
+        od->type = IMM;
+        od->imm = string2uint_range(str, 1, -1);
+    }
+//    else if (str[0] == '%'){
+//
+//        // register
+//    } else {
+//        // memory access
+//
+//    }
 
 }
 

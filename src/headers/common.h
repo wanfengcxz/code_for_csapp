@@ -5,6 +5,7 @@
 #define COMMON_GUARD
 
 #include <cstdint>
+#include <cstring>
 
 #define DEBUG_INSTRUCTION_CYCLE     0X1
 #define DEBUG_REGISTERS             0X2

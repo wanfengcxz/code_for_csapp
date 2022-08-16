@@ -6,7 +6,7 @@
 #define MEMORY_GUARD
 
 #include <cstdint>
-#include "cpu.h"
+#include "headers/cpu.h"
 
 /*======================================*/
 /*    physical memory on dram chips     */

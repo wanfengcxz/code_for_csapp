@@ -243,7 +243,7 @@ typedef struct CORE_STRUCT{
 extern core_t cores[NUM_CORES];
 
 // active core for current task
-uint64_t ACTIVE_CORE;
+extern uint64_t ACTIVE_CORE;
 
 #define MAX_INSTRUCTION_CHAR 64
 #define NUM_INSTRUCTION_TYPE 14

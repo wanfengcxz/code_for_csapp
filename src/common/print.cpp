@@ -4,12 +4,13 @@
 #include <cstdarg>
 #include <cstdio>
 #include <cassert>
-#include <common.h>
+
+#include "headers/common.h"
 
 // wrapper of stdio printf
 // controlled by the debug verbose bit set
 uint64_t debug_printf(uint64_t open_set, const char *format, ...){
-    if ((open_set & DEBUG_VERB) == 0x0){
+    if ((open_set & DEBUG_VERBOSE_SET) == 0x0){
         return 0x1;
     }
 

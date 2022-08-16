@@ -1,9 +1,8 @@
 #include <cstdio>
 #include <cstdint>
 
-#include "cpu.h"
-#include "memory.h"
-#include "common.h"
+#include "headers/memory.h"
+#include "headers/common.h"
 
 #define MAX_NUM_INSTRUCTION_CYCLE 100
 
@@ -13,9 +12,30 @@ static void TestAddFunctionCallAndComputation();
 void print_register(core_t *cr);
 void print_stack(core_t *cr);
 
+static void Test_string2uint(){
+    const char *str[12]={
+            "0",
+            "-0",
+            "0x0",
+            "1234",
+            "0x1234",
+            "0xabcd",
+            "-0xabcd",
+            "-1234",
+            " 2147483647",
+            "-2147483648",
+            "0X8000000000000000",
+            "0xffffffffffffffff"
+    };
+    for(int i = 0;i<12;i++){
+        printf("%s -> %llx\n", str[i], string2uint(str[i]));
+    }
+}
+
 int main()
 {
-    TestAddFunctionCallAndComputation();
+    Test_string2uint();
+//    TestAddFunctionCallAndComputation();
     return 0;
 }
 
