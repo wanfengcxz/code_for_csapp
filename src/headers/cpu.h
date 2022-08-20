@@ -169,6 +169,23 @@ typedef struct REGISTER_STRUCT{
 
 } reg_t;
 
+// cf of zf sf in total 64bit
+typedef struct CPU_FLAGS_STRUCT{
+    union {
+        uint64_t __cpu_flag_value;
+        struct {
+            // carry flag: detect overflow for unsigned operations
+            uint16_t CF;
+            // overflow flag: detect overflow for signed operations
+            uint16_t OF;
+            // zero flag: result is zero
+            uint16_t ZF;
+            //sign flag: result is negative: highest bit
+            uint16_t SF;
+        };
+    };
+} cpu_flag_t;
+
 /*======================================*/
 /*               sram cache             */
 /*======================================*/
@@ -223,14 +240,7 @@ typedef struct CORE_STRUCT{
        test    test
    */
 
-    // carry flag: detect overflow for unsigned operations
-    uint32_t CF;
-    // overflow flag: detect overflow for signed operations
-    uint32_t OF;
-    // zero flag: result is zero
-    uint32_t ZF;
-    //sign flag: result is negative: highest bit
-    uint32_t SF;
+    cpu_flag_t flags;
 
     // registers
     reg_t reg;
