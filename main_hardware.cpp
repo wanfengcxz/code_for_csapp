@@ -1,8 +1,10 @@
 #include <cstdio>
 #include <cstdint>
 
+#include "headers/cpu.h"
 #include "headers/memory.h"
 #include "headers/common.h"
+
 
 #define MAX_NUM_INSTRUCTION_CYCLE 100
 
@@ -10,40 +12,26 @@ static void TestAddFunctionCallAndComputation();
 
 // symbols from isa and sram
 void print_register(core_t *cr);
+
 void print_stack(core_t *cr);
 
-static void Test_string2uint(){
-    const char *str[12]={
-            "0",
-            "-0",
-            "0x0",
-            "1234",
-            "0x1234",
-            "0xabcd",
-            "-0xabcd",
-            "-1234",
-            " 2147483647",
-            "-2147483648",
-            "0X8000000000000000",
-            "0xffffffffffffffff"
-    };
-    for(int i = 0;i<12;i++){
-        printf("%s -> %llx\n", str[i], string2uint(str[i]));
-    }
-}
+static void Test_string2uint();
 
-int main()
-{
-    Test_string2uint();
+void TestParsingOperand();
+
+
+int main() {
+
+    TestParsingOperand();
+//    Test_string2uint();
 //    TestAddFunctionCallAndComputation();
     return 0;
 }
 
-static void TestAddFunctionCallAndComputation()
-{
-    ACTIVE_CORE = 0x0;
+static void TestAddFunctionCallAndComputation() {
 
-    core_t *ac = (core_t *)&cores[ACTIVE_CORE];
+    ACTIVE_CORE = 0x0;
+    core_t *ac = (core_t *) &cores[ACTIVE_CORE];
 
     // init state
     ac->reg.rax = 0xabcd;
@@ -55,10 +43,7 @@ static void TestAddFunctionCallAndComputation()
     ac->reg.rbp = 0x7ffffffee110;
     ac->reg.rsp = 0x7ffffffee0f0;
 
-    ac->CF = 0;
-    ac->ZF = 0;
-    ac->SF = 0;
-    ac->OF = 0;
+    (ac->flags).__cpu_flag_value = 0;
 
     write64bits_dram(va2pa(0x7ffffffee110, ac), 0x0000000000000000, ac);    // rbp
     write64bits_dram(va2pa(0x7ffffffee108, ac), 0x0000000000000000, ac);
@@ -84,17 +69,16 @@ static void TestAddFunctionCallAndComputation()
             "mov    %rax,-0x8(%rbp)",   // 14
     };
 
-    ac->rip = (uint64_t)&assembly[11];
+    ac->rip = (uint64_t) &assembly[11];
     sprintf(assembly[13], "callq  $%p", &assembly[0]);
 
     printf("begin\n");
     int time = 0;
-    while (time < 15)
-    {
+    while (time < 15) {
         instruction_cycle(ac);
         print_register(ac);
         print_stack(ac);
-        time ++;
+        time++;
     }
 
     // gdb state ret from func
@@ -108,12 +92,9 @@ static void TestAddFunctionCallAndComputation()
     match = match && ac->reg.rbp == 0x7ffffffee110;
     match = match && ac->reg.rsp == 0x7ffffffee0f0;
 
-    if (match)
-    {
+    if (match) {
         printf("register match\n");
-    }
-    else
-    {
+    } else {
         printf("register mismatch\n");
     }
 
@@ -123,14 +104,33 @@ static void TestAddFunctionCallAndComputation()
     match = match && (read64bits_dram(va2pa(0x7ffffffee0f8, ac), ac) == 0x000000000000abcd);
     match = match && (read64bits_dram(va2pa(0x7ffffffee0f0, ac), ac) == 0x0000000000000000); // rsp
 
-    if (match)
-    {
+    if (match) {
         printf("memory match\n");
-    }
-    else
-    {
+    } else {
         printf("memory mismatch\n");
     }
 }
+
+static void Test_string2uint() {
+    const char *str[12] = {
+            "0",
+            "-0",
+            "0x0",
+            "1234",
+            "0x1234",
+            "0xabcd",
+            "-0xabcd",
+            "-1234",
+            " 2147483647",
+            "-2147483648",
+            "0X8000000000000000",
+            "0xffffffffffffffff"
+    };
+    for (int i = 0; i < 12; i++) {
+        printf("%s -> %llx\n", str[i], string2uint(str[i]));
+    }
+}
+
+
 
 
