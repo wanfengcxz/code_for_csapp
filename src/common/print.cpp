@@ -1,9 +1,8 @@
 //
 // Created by 晚风吹行舟 on 2022/8/13.
 //
-#include <cstdarg>
-#include <cstdio>
-#include <cassert>
+#include <stdarg.h>
+#include <stdio.h>
 
 #include "headers/common.h"
 
@@ -14,12 +13,12 @@ uint64_t debug_printf(uint64_t open_set, const char *format, ...){
         return 0x1;
     }
 
-    va_list  argptr;
+    va_list argptr;
     // format: %[flags][width][.precision][length]specifier
     // specifier: d,c,x,f...
     va_start(argptr, format);
     vfprintf(stderr, format, argptr);
     va_end(argptr);
 
-    return 0x1;
+    return 0x0;
 }

@@ -5,8 +5,7 @@
 // Memory Management Unit
 #include "headers/cpu.h"
 #include "headers/memory.h"
-#include "headers/common.h"
 
 uint64_t va2pa(uint64_t vaddr, core_t *cr) {
-    return vaddr & (0xffffffffffffffff >> (64 - MAX_PHYSICAL_BIT));
+    return vaddr % PHYSICAL_MEMORY_SPACE;
 }
