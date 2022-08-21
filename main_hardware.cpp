@@ -19,12 +19,13 @@ static void Test_string2uint();
 
 void TestParsingOperand();
 
+void TestParsingInstruction();
 
 int main() {
-
-    TestParsingOperand();
+//    TestParsingInstruction();
+//    TestParsingOperand();
 //    Test_string2uint();
-//    TestAddFunctionCallAndComputation();
+    TestAddFunctionCallAndComputation();
     return 0;
 }
 
@@ -70,7 +71,7 @@ static void TestAddFunctionCallAndComputation() {
     };
 
     ac->rip = (uint64_t) &assembly[11];
-    sprintf(assembly[13], "callq  $%p", &assembly[0]);
+    sprintf(assembly[13], "callq  $0x%p", &assembly[0]);
 
     printf("begin\n");
     int time = 0;

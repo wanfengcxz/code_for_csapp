@@ -112,7 +112,17 @@ uint64_t string2uint_range(const char *str, int start, int end) {
                     printf("(uint64_t)%s overflow: cannot convert\n", str);
                     goto fail;
                 }
-            } else {
+            } else if ( 'A' <= c && c <= 'F'){
+                state = 5;
+                uint64_t pre_v = unsigned_v;
+                unsigned_v = unsigned_v * 16 + c - 'A' + 10;
+                // maybe overflow
+                if (pre_v > unsigned_v) {
+                    printf("(uint64_t)%s overflow: cannot convert\n", str);
+                    goto fail;
+                }
+            }
+            else {
                 goto fail;
             }
         } else if (state == 6) {
