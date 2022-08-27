@@ -29,5 +29,7 @@ extern uint8_t pm[PHYSICAL_MEMORY_SPACE]; // physical memory
 
 uint64_t read64bits_dram(uint64_t paddr, core_t *cr);
 void write64bits_dram(uint64_t paddr, uint64_t data, core_t *cr);
+void read_inst_dram(uint64_t paddr, char *buf, core_t *cr);
+void write_inst_dram(uint64_t paddr, char *str, core_t *cr);
 
 #endif
