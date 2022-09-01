@@ -16,7 +16,7 @@ typedef struct {
     uint64_t sh_offset;
     uint64_t sh_size;
 
-} sht_entry_t;   // section table entry
+} sh_entry_t;   // section table entry
 
 #define MAX_CHAR_SYMBOL_NAME (64)
 
@@ -48,8 +48,15 @@ typedef struct {
 
     char buffer[MAX_ELF_FILE_LENGTH][MAX_ELF_FILE_WIDTH];
     uint64_t line_count;
-    sht_entry_t *sht;
+    uint64_t sht_count;
+    sh_entry_t *sht;
+
+    uint64_t symt_count;
+    st_entry_t *symt;
 
 } elf_t;
+
+void parse_elf(char *filename, elf_t *elf);
+void free_elf(elf_t *elf);
 
 #endif
