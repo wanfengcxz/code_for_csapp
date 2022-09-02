@@ -58,5 +58,6 @@ typedef struct {
 
 void parse_elf(char *filename, elf_t *elf);
 void free_elf(elf_t *elf);
+void link_elf(elf_t **src, int num_src, elf_t *dst);
 
 #endif

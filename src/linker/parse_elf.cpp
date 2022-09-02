@@ -177,8 +177,6 @@ static int read_elf(const char *file_name, uint64_t buf_addr) {
             }
             line_buf[i] = '\0';
             line_counter++;
-            printf("%\s\n", line_buf);
-
         } else {
             debug_printf(DEBUG_LINKER, "elf file %s is too long ", file_name);
             debug_printf(DEBUG_LINKER, "(>%d)\n", MAX_ELF_FILE_LENGTH);
